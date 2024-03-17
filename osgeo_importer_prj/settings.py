@@ -79,7 +79,10 @@ LOCALE_PATHS = (
 ) + LOCALE_PATHS
 
 
-INSTALLED_APPS = INSTALLED_APPS + ("osgeo_importer", "osgeo_importer_client",)
+INSTALLED_APPS = INSTALLED_APPS + ["osgeo_importer",
+                                   "osgeo_importer_client",
+                                   "osgeo_importer.apps.OsgeoImporterConfig"]
+
 # # Remove 'geonode.geoserver', useful for experimenting with a geoserver-less configuration.
 # INSTALLED_APPS = [ a for a in INSTALLED_APPS if a != 'geonode.geoserver' ]
 
