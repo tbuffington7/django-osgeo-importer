@@ -134,6 +134,7 @@ class UploadedData(models.Model):
     file_type = models.CharField(max_length=50, null=True, blank=True)
 
     class Meta:
+        app_label = 'osgeo_importer'
         ordering = ['-date']
         verbose_name_plural = 'Upload data'
 
