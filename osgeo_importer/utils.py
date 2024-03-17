@@ -16,12 +16,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.files.storage import FileSystemStorage
 from django.utils.text import Truncator
-try:
-    import gdal
-    import ogr
-    import osr
-except:
-    from osgeo import gdal, ogr, osr
+from osgeo import gdal, ogr, osr
 
 logger = logging.getLogger(__name__)
 
