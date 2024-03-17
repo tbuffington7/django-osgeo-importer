@@ -5,7 +5,7 @@ import os
 from django import db
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
-import gdal
+from osgeo import gdal
 import ogr
 import osr
 
