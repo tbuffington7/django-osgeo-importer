@@ -26,14 +26,12 @@ import re
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
 from jsonfield import JSONField
 
-try:
-    from django.contrib.contenttypes.fields import GenericForeignKey
-except ImportError:
-    from django.contrib.contenttypes.generic import GenericForeignKey
+from django.contrib.contenttypes.fields import GenericForeignKey
+
 
 from .utils import NoDataSourceFound
 from .utils import sizeof_fmt, load_handler
@@ -125,7 +123,7 @@ def validate_inspector_can_read(value):
 
 
 class UploadedData(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
     state = models.CharField(max_length=16)
     date = models.DateTimeField('date', auto_now_add=True)
     upload_dir = models.CharField(max_length=1000, null=True)
@@ -169,7 +167,7 @@ class UploadedData(models.Model):
 
 
 class UploadFile(models.Model):
-    upload = models.ForeignKey(UploadedData, null=True, blank=True)
+    upload = models.ForeignKey(UploadedData, null=True, blank=True, on_delete=models.CASCADE)
     file = models.FileField(
         upload_to="uploads",
         max_length=1000,
@@ -200,13 +198,13 @@ class UploadFile(models.Model):
 class UploadLayer(models.Model):
     """Layers stored in an uploaded data set.
     """
-    upload = models.ForeignKey(UploadedData, null=True, blank=True)
-    upload_file = models.ForeignKey(UploadFile, null=True, blank=True)
+    upload = models.ForeignKey(UploadedData, null=True, blank=True, on_delete=models.CASCADE)
+    upload_file = models.ForeignKey(UploadFile, null=True, blank=True, on_delete=models.CASCADE)
     index = models.IntegerField(default=0)
     # *deprecated* name of the layer, sometimes other data
     name = models.CharField(max_length=64, null=True)
     fields = JSONField(null=True, default={})
-    content_type = models.ForeignKey(ContentType, blank=True, null=True)
+    content_type = models.ForeignKey(ContentType, blank=True, null=True, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField(blank=True, null=True)
     layer = GenericForeignKey('content_type', 'object_id')
     configuration_options = JSONField(null=True)
@@ -303,7 +301,7 @@ class UploadException(models.Model):
     """
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Timestamp when the exception was logged.')
     error = models.TextField()
-    upload_layer = models.ForeignKey(UploadLayer, blank=True, null=True)
+    upload_layer = models.ForeignKey(UploadLayer, blank=True, null=True, on_delete=models.CASCADE)
     task_id = models.CharField(max_length=36, blank=True, null=True)
     traceback = models.TextField(blank=True, null=True)
     verbose_traceback = models.TextField(blank=True, null=True, help_text='A humanized exception message.')
