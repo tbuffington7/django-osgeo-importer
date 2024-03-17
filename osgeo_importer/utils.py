@@ -7,7 +7,7 @@ import os
 import re
 import shutil
 import sys
-from urlparse import urlparse
+from urllib.parse import urlparse
 import uuid
 
 from dateutil.parser import parse
@@ -107,7 +107,7 @@ def ignore_invalid_chars(fields):
     cleaned = fields
     if isinstance(fields, list):
         for i, field in enumerate(fields):
-            for key, value in field.iteritems():
+            for key, value in field.items():
                 cleaned[i][key] = value.decode('utf_8', 'ignore')
     return cleaned
 
