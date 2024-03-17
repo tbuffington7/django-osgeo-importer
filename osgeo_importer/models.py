@@ -180,6 +180,9 @@ class UploadFile(models.Model):
     file_type = models.CharField(max_length=50, null=True, blank=True)
     slug = models.SlugField(max_length=250, blank=True)
 
+    class Meta:
+        app_label = 'osgeo_importer'
+
     def __unicode__(self):
         return self.slug
 
@@ -217,6 +220,9 @@ class UploadLayer(models.Model):
     # Geonode-wide unique name for layer.
     layer_name = models.CharField(max_length=64, null=True)
     layer_type = models.CharField(max_length=10, null=True)
+
+    class Meta:
+        app_label = 'osgeo_importer'
 
     @property
     def file_name(self):
@@ -307,6 +313,9 @@ class UploadException(models.Model):
     traceback = models.TextField(blank=True, null=True)
     verbose_traceback = models.TextField(blank=True, null=True, help_text='A humanized exception message.')
 
+    class Meta:
+        app_label = 'osgeo_importer'
+
     @classmethod
     def raise_exception(cls, error, task_id, upload_layer, verbose_message):
         """
@@ -337,3 +346,6 @@ class MapProxyCacheConfig(models.Model):
     # Location of the file this config is for
     gpkg_filepath = models.CharField(max_length=1000)
     config = models.TextField()
+
+    class Meta:
+        app_label = 'osgeo_importer'
