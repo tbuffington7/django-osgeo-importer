@@ -221,9 +221,6 @@ class UploadLayer(models.Model):
     layer_name = models.CharField(max_length=64, null=True)
     layer_type = models.CharField(max_length=10, null=True)
 
-    class Meta:
-        app_label = 'osgeo_importer'
-
     @property
     def file_name(self):
         if not self.upload_file:
@@ -300,6 +297,7 @@ class UploadLayer(models.Model):
 
     class Meta:
         ordering = ('index',)
+        app_label = 'osgeo_importer'
 
 
 class UploadException(models.Model):
@@ -313,8 +311,6 @@ class UploadException(models.Model):
     traceback = models.TextField(blank=True, null=True)
     verbose_traceback = models.TextField(blank=True, null=True, help_text='A humanized exception message.')
 
-    class Meta:
-        app_label = 'osgeo_importer'
 
     @classmethod
     def raise_exception(cls, error, task_id, upload_layer, verbose_message):
@@ -338,6 +334,7 @@ class UploadException(models.Model):
 
     class Meta:
         verbose_name = 'Upload Exception'
+        app_label = 'osgeo_importer'
 
 
 class MapProxyCacheConfig(models.Model):
