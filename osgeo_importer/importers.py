@@ -5,9 +5,8 @@ import os
 from django import db
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
-from osgeo import gdal
-import ogr
-import osr
+from osgeo import gdal, ogr, osr
+
 
 from osgeo_importer.models import UploadLayer
 
@@ -64,7 +63,7 @@ class Import(object):
         :param handler_name: The name of the handler.
         :return: A List of handlers and their results.
         """
-        return filter(lambda results: handler_name in results.keys(), self.handler_results)
+        return list(filter(lambda results: handler_name in results.keys(), self.handler_results))
 
     def _initialize_handlers(self):
         self._import_handlers = [load_handler(handler, self)
