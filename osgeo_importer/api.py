@@ -1,7 +1,7 @@
 import json
 import logging
 
-from django.conf.urls import url
+from django.conf.urls import re_path
 from django.contrib.auth import get_user_model
 from tastypie import http
 from tastypie.authentication import SessionAuthentication
@@ -106,7 +106,7 @@ class UploadedLayerResource(ModelResource):
         return self.create_response(request, {'task': task_id})
 
     def prepend_urls(self):
-        return [url(r"^(?P<resource_name>{0})/(?P<pk>\d+)/configure{1}$".format(self._meta.resource_name,
+        return [re_path(r"^(?P<resource_name>{0})/(?P<pk>\d+)/configure{1}$".format(self._meta.resource_name,
                                                                                 trailing_slash()), self.wrap_view('import_layer'), name="importer_configure"),
                 ]
 
@@ -163,7 +163,7 @@ class UploadedDataResource(ModelResource):
     def prepend_urls(self):
         pu = super(UploadedDataResource, self).prepend_urls()
         pu.extend([
-            url(
+            re_path(
                 r'^(?P<resource_name>{0})/(?P<pk>\w[\w/-]*)/import_all_layers{1}$'
                 .format(self._meta.resource_name, trailing_slash()),
                 self.wrap_view('import_all_layers'),
