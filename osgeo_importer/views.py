@@ -8,7 +8,7 @@ import zipfile
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.http import HttpResponse
 from django.http.response import JsonResponse, HttpResponseRedirect
 from django.utils.decorators import method_decorator
