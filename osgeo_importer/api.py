@@ -1,7 +1,7 @@
 import json
 import logging
 
-from django.conf.urls import re_path
+from django.urls import re_path
 from django.contrib.auth import get_user_model
 from tastypie import http
 from tastypie.authentication import SessionAuthentication
